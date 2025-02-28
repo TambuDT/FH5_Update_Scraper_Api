@@ -22,7 +22,7 @@ app.get('/scrape', async (req, res) => {
     const version = versionMatch ? versionMatch[0] : 'Versione non trovata';
 
     // Estrazione del link
-    const linkElement = $('#post-838 > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(7) > a');
+    const linkElement = $('#post-838 > div.entry-content-wrap.read-single > div.color-pad > div > div:nth-child(9) > a');
     const linkHref = linkElement.attr('href'); // URL del link
 
     // Restituisci versione e link in formato JSON
