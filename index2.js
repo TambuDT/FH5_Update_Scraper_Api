@@ -21,43 +21,9 @@ app.get('/scrape', async (req, res) => {
     const versionMatch = fullTitle.match(/v\d+\.\d+\.\d+\.\d+/); // Cerca "vX.X.X.X"
     const version = versionMatch ? versionMatch[0] : 'Versione non trovata';
 
-    // Estrazione del link torrent o magnetico
-    let linkHref = null;
-
-    // Metodo 1: Cerca il link tramite selettore specifico
+    // Estrazione del link
     const linkElement = $('#post-838 > div.entry-content-wrap.read-single > div.color-pad > div > div:nth-child(9) > a');
-    if (linkElement.length > 0) {
-      linkHref = linkElement.attr('href');
-    }
-
-    // Metodo 2: Cerca tutti i tag <a> con href che termina con ".torrent"
-    if (!linkHref) {
-      $('a').each((index, element) => {
-        const href = $(element).attr('href');
-        if (href && href.endsWith('.torrent')) {
-          linkHref = href;
-        }
-      });
-    }
-
-    // Metodo 3: Cerca tutti i tag <a> con href che inizia con "magnet:"
-    if (!linkHref) {
-      $('a').each((index, element) => {
-        const href = $(element).attr('href');
-        if (href && href.startsWith('magnet:')) {
-          linkHref = href;
-        }
-      });
-    }
-
-    // Metodo 4: Usa regex generica per cercare pattern di link torrent nel contenuto HTML
-    if (!linkHref) {
-      const regex = /href="(https?:\/\/.*?\.torrent)"/gi;
-      const matches = data.match(regex);
-      if (matches && matches.length > 0) {
-        linkHref = matches[0].replace('href="', '').replace('"', '');
-      }
-    }
+    const linkHref = linkElement.attr('href'); // URL del link
 
     // Restituisci versione e link in formato JSON
     res.json({
@@ -71,7 +37,6 @@ app.get('/scrape', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Errore durante lo scraping',
-      error: error.message
     });
   }
 });
