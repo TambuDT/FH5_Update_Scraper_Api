@@ -17,9 +17,10 @@ app.get('/scrape', async (req, res) => {
     const $ = cheerio.load(data);
 
     // Estrazione della versione del gioco
-    const fullTitle = $('#post-838 > div:nth-child(1) > div:nth-child(1) > header > div > div > h1').text();
+    const fullTitle = $('h1.entry-title').text();
     const versionMatch = fullTitle.match(/v\d+\.\d+\.\d+\.\d+/); // Cerca "vX.X.X.X"
     const version = versionMatch ? versionMatch[0] : 'Versione non trovata';
+
 
     // Estrazione del link torrent o magnetico
     let linkHref = null;
