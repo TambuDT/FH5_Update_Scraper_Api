@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/scrape', async (req, res) => {
   try {
-    const url = 'https://teamkong.rf.gd/forza-horizon-5/';
+    const url = 'https://teamkong.rf.gd/2026/01/31/forza-horizon-5/';
 
     const { data } = await axios.get(url, {
       headers: {
